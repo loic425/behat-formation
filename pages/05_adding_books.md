@@ -19,3 +19,93 @@ Feature: Adding a new book
         And the book "Shinning" should appear in the list
 
 ```
+
+---
+transition: fade
+---
+
+```php {17}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    public function __construct(
+        private IndexPage $indexPage,
+    ) {
+    }
+
+    // [...]
+
+    /**
+     * @Then I should see the book :name in the list
+     */
+    public function iShouldSeeTheBookInTheList(string $name): void
+    {
+        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));
+    }
+}
+```
+
+---
+transition: fade
+---
+
+```php {all}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    public function __construct(
+        private IndexPage $indexPage,
+    ) {
+    }
+
+    // [...]
+}
+```
+
+---
+
+```php {all|7|13|16}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    public function __construct(
+        private IndexPage $indexPage,
+        private CreatePage $createPage,
+    ) {
+    }
+    
+    // [...]
+
+    #[Given('I want to create a new book')]
+    public function iWantToCreateANewBook(): void
+    {
+        $this->createPage->open();
+    }
+    
+    // [...]
+}
+```
+
+---
+
+# Create book page
+
+```php {all|7|5,7|9|11}
+// tests/Behat/Page/Backend/Book/CreatePage.php
+
+namespace App\Tests\Behat\Page\Backend\Book;
+
+use Monofony\Bridge\Behat\Crud\AbstractCreatePage;
+
+final class CreatePage extends AbstractCreatePage
+{
+    public function getRouteName(): string
+    {
+        return 'app_backend_book_create';
+    }
+}
+
+```

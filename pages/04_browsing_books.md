@@ -245,5 +245,3 @@ final class ManagingBooksContext implements Context
     }
 }
 ```
-
----

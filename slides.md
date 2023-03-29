@@ -53,3 +53,7 @@ src: ./pages/03_contexts.md
 ---
 src: ./pages/04_browsing_books.md
 ---
+
+---
+src: ./pages/05_adding_books.md
+---

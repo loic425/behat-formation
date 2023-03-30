@@ -57,3 +57,7 @@ src: ./pages/04_browsing_books.md
 ---
 src: ./pages/05_adding_books.md
 ---
+
+---
+src: ./pages/06_editing_books.md
+---

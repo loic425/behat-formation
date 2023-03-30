@@ -23,6 +23,28 @@ Feature: Editing a book
 ```
 
 ---
+
+```php {all|8|8,6|10|10,5|14}
+// tests/Behat/Page/Backend/Book/UpdatePage.php
+
+namespace App\Tests\Behat\Page\Backend\Book;
+
+use Monofony\Bridge\Behat\Behaviour\NamesIt;
+use Monofony\Bridge\Behat\Crud\AbstractUpdatePage;
+
+final class UpdatePage extends AbstractUpdatePage
+{
+    use NamesIt;
+    
+    public function getRouteName(): string
+    {
+        return 'app_backend_book_update';
+    }
+}
+
+```
+
+---
 transition: fade
 ---
 
@@ -222,6 +244,151 @@ final class ManagingBooksContext implements Context
     public function iChangeItsNameTo(string $name): void
     {
         $this->updatePage->nameIt($name);
+    }
+    
+    // [...]
+}
+```
+
+---
+
+# Editing books
+
+```gherkin {14|15}
+@managing_books
+Feature: Editing a book
+    In order to change information about a book
+    As an Administrator
+    I want to be able to edit a book
+
+    Background:
+        Given there is a book with name "Shinning"
+        And I am logged in as an administrator
+
+    @ui
+    Scenario: Renaming a book
+        When I want to edit this book
+        And I change its name to "Carrie"
+        And I save my changes
+        Then I should be notified that it has been successfully edited
+        And this book with name "Carrie" should appear in the list
+
+
+```
+
+---
+transition: fade
+---
+
+```php {7-11}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    // [...]
+    
+    #[When('I add it')]
+    public function iAddIt(): void
+    {
+        $this->createPage->create();
+    }
+    
+    // [...]
+}
+```
+
+---
+
+```php {13-17|13|14|16}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    // [...]
+    
+    #[When('I add it')]
+    public function iAddIt(): void
+    {
+        $this->createPage->create();
+    }
+    
+    #[When('I save my changes')]
+    public function iSaveMyChanges(): void
+    {
+        $this->updatePage->saveChanges();
+    }
+    
+    // [...]
+}
+```
+
+---
+
+```gherkin {15|16|17}
+@managing_books
+Feature: Editing a book
+    In order to change information about a book
+    As an Administrator
+    I want to be able to edit a book
+
+    Background:
+        Given there is a book with name "Shinning"
+        And I am logged in as an administrator
+
+    @ui
+    Scenario: Renaming a book
+        When I want to edit this book
+        And I change its name to "Carrie"
+        And I save my changes
+        Then I should be notified that it has been successfully edited
+        And this book with name "Carrie" should appear in the list
+
+
+```
+
+---
+transition: fade
+---
+
+```php {7-15|8}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    // [...]
+    
+    /**
+     * @Then the book :name should appear in the list
+     */
+    public function theBookShouldAppearInTheList(string $name): void
+    {
+        $this->indexPage->open();
+
+        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));
+    }
+    
+    // [...]
+}
+```
+
+---
+
+```php {9}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    // [...]
+    
+    /**
+     * @Then the book :name should appear in the list
+     * @Then this book with name :name should appear in the list
+     */
+    public function theBookShouldAppearInTheList(string $name): void
+    {
+        $this->indexPage->open();
+
+        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));
     }
     
     // [...]

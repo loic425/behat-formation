@@ -48,7 +48,7 @@ final class BookContext implements Context
 
 ---
 
-```gherkin {all|14}
+```gherkin {8-9|14}
 @managing_books
 Feature: Browsing books
     In order to see all books in the admin panel
@@ -111,7 +111,7 @@ final class IndexPage extends AbstractIndexPage
 
 ---
 
-```gherkin {all|15}
+```gherkin {14|15}
 @managing_books
 Feature: Browsing books
     In order to see all books in the admin panel
@@ -134,15 +134,12 @@ Feature: Browsing books
 transition: fade
 ---
 
-```php
+```php {10}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
-    public function __construct(
-        private IndexPage $indexPage,
-    ) {
-    }
+    // [...]
 
     #[When('I want to browse books')]
     public function iWantToBrowseBooks(): void
@@ -153,17 +150,18 @@ final class ManagingBooksContext implements Context
 
 ---
 
-```php {all|13|15|17}
+```php {13-19|14|16|18}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
-    public function __construct(
-        private IndexPage $indexPage,
-    ) {
-    }
+    / [...]
 
-    // [...]
+    #[When('I want to browse books')]
+    public function iWantToBrowseBooks(): void
+    {
+        $this->indexPage->open();
+    }
 
     /**
      * @Then there should be :amount books in the list
@@ -177,7 +175,7 @@ final class ManagingBooksContext implements Context
 
 ---
 
-```gherkin {all|16}
+```gherkin {15|16}
 @managing_books
 Feature: Browsing books
     In order to see all books in the admin panel
@@ -200,16 +198,11 @@ Feature: Browsing books
 transition: fade
 ---
 
-```php {all|12-18}
+```php {12-18}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
-    public function __construct(
-        private IndexPage $indexPage,
-    ) {
-    }
-
     // [...]
 
     /**
@@ -224,17 +217,20 @@ final class ManagingBooksContext implements Context
 
 ---
 
-```php {12-18|13|15|17}
+```php {15-21|16|18|20}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
-    public function __construct(
-        private IndexPage $indexPage,
-    ) {
-    }
-
     // [...]
+
+    /**
+     * @Then there should be :amount books in the list
+     */
+    public function thereShouldBeBooksInTheList(int $amount): void
+    {
+        Assert::eq($this->indexPage->countItems(), $amount);
+    }
 
     /**
      * @Then I should see the book :name in the list

@@ -61,3 +61,7 @@ src: ./pages/05_adding_books.md
 ---
 src: ./pages/06_editing_books.md
 ---
+
+---
+src: ./pages/07_deleting_books.md
+---

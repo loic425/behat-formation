@@ -65,3 +65,7 @@ src: ./pages/06_editing_books.md
 ---
 src: ./pages/07_deleting_books.md
 ---
+
+---
+src: ./pages/08_books_validation.md
+---

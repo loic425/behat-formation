@@ -267,3 +267,155 @@ final class CreatePage extends AbstractCreatePage
 }
 
 ```
+
+---
+
+```gherkin {13|14}
+@managing_books
+Feature: Adding a new book
+    In order to create new book
+    As an Administrator
+    I want to add a book in the admin panel
+
+    Background:
+        Given I am logged in as an administrator
+
+    @ui
+    Scenario: Adding a new book
+        Given I want to create a new book
+        When I specify its name as "Shinning"
+        And I add it
+        Then I should be notified that it has been successfully created
+        And the book "Shinning" should appear in the list
+
+```
+
+---
+transition: fade
+---
+
+```php {16}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    public function __construct(
+        private IndexPage $indexPage,
+        private CreatePage $createPage,
+    ) {
+    }
+    
+    // [...]
+
+    #[When('I specify its name as :name')]
+    public function iSpecifyItsNameAs(string $name): void
+    {
+        $this->createPage->nameIt($name);
+    }
+    
+    // [...]
+}
+```
+
+---
+
+```php {19-23|19|20|22}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    public function __construct(
+        private IndexPage $indexPage,
+        private CreatePage $createPage,
+    ) {
+    }
+    
+    // [...]
+
+    #[When('I specify its name as :name')]
+    public function iSpecifyItsNameAs(string $name): void
+    {
+        $this->createPage->nameIt($name);
+    }
+    
+    #[When('I add it')]
+    public function iAddIt(): void
+    {
+        $this->createPage->create();
+    }
+    
+    // [...]
+}
+```
+
+---
+
+```gherkin {14|15|16}
+@managing_books
+Feature: Adding a new book
+    In order to create new book
+    As an Administrator
+    I want to add a book in the admin panel
+
+    Background:
+        Given I am logged in as an administrator
+
+    @ui
+    Scenario: Adding a new book
+        Given I want to create a new book
+        When I specify its name as "Shinning"
+        And I add it
+        Then I should be notified that it has been successfully created
+        And the book "Shinning" should appear in the list
+
+```
+
+---
+transition: fade
+---
+
+```php {10}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+   // [...]
+    
+    #[When('I add it')]
+    public function iAddIt(): void
+    {
+        $this->createPage->create();
+    }
+    
+    // [...]
+}
+```
+
+---
+
+```php {13-21|14|16|18|20}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    // [...]
+    
+    #[When('I add it')]
+    public function iAddIt(): void
+    {
+        $this->createPage->create();
+    }
+    
+    /**
+     * @Then the book :name should appear in the list
+     */
+    public function theBookShouldAppearInTheList(string $name): void
+    {
+        $this->indexPage->open();
+
+        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));
+    }
+    
+    // [...]
+}
+```

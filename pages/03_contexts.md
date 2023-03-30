@@ -1,5 +1,7 @@
 # Contexts
 
+<v-clicks>
+
 Un contexte Behat est ce qui va permettre de convertir les phrases Gherkin en tests.
 
 ```php
@@ -22,6 +24,8 @@ final class ManagingBooksContext implements Context
     }
 ```
 
+</v-clicks>
+
 ---
 
 # Quelques règles
@@ -33,7 +37,7 @@ final class ManagingBooksContext implements Context
 
 On peut également utiliser les attributes PHP 8:
 
-```php {all|12}
+```php {all|10|7,10|12}
 <?php
 
 declare(strict_types=1);

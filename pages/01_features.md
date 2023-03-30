@@ -27,6 +27,8 @@ Feature: Browsing books
 
 # Features
 
+<v-clicks>
+
 Les features contiennent des scénarii qui décrivent les fonctionnalités de l'application.
 
 Exemple 2 : Adding books
@@ -49,3 +51,5 @@ Feature: Adding a new book
         Then I should be notified that it has been successfully created
         And the book "Shinning" should appear in the list
 ```
+
+</v-clicks>

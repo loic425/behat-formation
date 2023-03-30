@@ -1,5 +1,7 @@
 # Suites
 
+<v-clicks>
+
 Les suites définissent un ensemble de scénarios à lancer.
 Ils définissent les contextes associés et se basent sur les tags.
 
@@ -24,3 +26,5 @@ default:
             filters:
                 tags: "@managing_books&&@ui"
 ```
+
+</v-clicks>

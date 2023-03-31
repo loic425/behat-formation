@@ -24,7 +24,7 @@ Feature: Adding a new book
 transition: fade
 ---
 
-```php {17}
+```php {15}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
@@ -36,9 +36,7 @@ final class ManagingBooksContext implements Context
 
     // [...]
 
-    /**
-     * @Then I should see the book :name in the list
-     */
+    #[Then('I should see the book :name in the list')]
     public function iShouldSeeTheBookInTheList(string $name): void
     {
         Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));
@@ -136,17 +134,11 @@ Feature: Adding a new book
 transition: fade
 ---
 
-```php {16}
+```php {10}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
-    public function __construct(
-        private IndexPage $indexPage,
-        private CreatePage $createPage,
-    ) {
-    }
-    
     // [...]
 
     #[Given('I want to create a new book')]
@@ -161,19 +153,13 @@ final class ManagingBooksContext implements Context
 
 ---
 
-```php {19-23|19|20|22}
+```php {13-17|13|14|16}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
-    public function __construct(
-        private IndexPage $indexPage,
-        private CreatePage $createPage,
-    ) {
-    }
-    
     // [...]
-    
+
     #[Given('I want to create a new book')]
     public function iWantToCreateANewBook(): void
     {
@@ -294,17 +280,11 @@ Feature: Adding a new book
 transition: fade
 ---
 
-```php {16}
+```php {10}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
-    public function __construct(
-        private IndexPage $indexPage,
-        private CreatePage $createPage,
-    ) {
-    }
-    
     // [...]
 
     #[When('I specify its name as :name')]
@@ -319,17 +299,11 @@ final class ManagingBooksContext implements Context
 
 ---
 
-```php {19-23|19|20|22}
+```php {13-17|13|14|16}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
-    public function __construct(
-        private IndexPage $indexPage,
-        private CreatePage $createPage,
-    ) {
-    }
-    
     // [...]
 
     #[When('I specify its name as :name')]
@@ -393,7 +367,7 @@ final class ManagingBooksContext implements Context
 
 ---
 
-```php {13-21|14|16|18|20}
+```php {13-19|13|14|16|18}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
@@ -406,9 +380,7 @@ final class ManagingBooksContext implements Context
         $this->createPage->create();
     }
     
-    /**
-     * @Then the book :name should appear in the list
-     */
+    #[Then('the book :name should appear in the list')] 
     public function theBookShouldAppearInTheList(string $name): void
     {
         $this->indexPage->open();

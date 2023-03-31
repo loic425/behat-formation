@@ -23,7 +23,7 @@ Feature: Deleting a book
 
 ---
 
-```php {all|8}
+```php {all|7|8}
 // src tests/Behat/Context/Setup/BookContext.php
 
 final class BookContext implements Context
@@ -142,17 +142,15 @@ Feature: Deleting a book
 transition: fade
 ---
 
-```php {7-16}
+```php {7-14}
 // src tests/Behat/Context/Setup/BookContext.php
 
 final class BookContext implements Context
 {
     // [...]
 
-    /**
-     * @Then the book :name should appear in the list
-     * @Then this book with name :name should appear in the list
-     */
+    #[Then('the book :name should appear in the list')
+    #[Then('this book with name :name should appear in the list')
     public function theBookShouldAppearInTheList(string $name): void
     {
         $this->indexPage->open();
@@ -167,17 +165,15 @@ final class BookContext implements Context
 
 ---
 
-```php {18-26|19|21|23|25}
+```php {16-22|16|17|19|21}
 // src tests/Behat/Context/Setup/BookContext.php
 
 final class BookContext implements Context
 {
     // [...]
 
-    /**
-     * @Then the book :name should appear in the list
-     * @Then this book with name :name should appear in the list
-     */
+    #[Then('the book :name should appear in the list')
+    #[Then('this book with name :name should appear in the list')
     public function theBookShouldAppearInTheList(string $name): void
     {
         $this->indexPage->open();
@@ -185,9 +181,7 @@ final class BookContext implements Context
         Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));
     }
     
-    /**
-     * @Then there should not be :name book anymore
-     */
+    #[Then('there should not be :name book anymore')
     public function thereShouldNotBeBookAnymore(string $name): void
     {
         $this->indexPage->open();

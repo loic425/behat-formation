@@ -21,7 +21,7 @@ Feature: Browsing books
 
 ---
 
-```php {all|3|6|11|13|15|16|18-19}
+```php {all|3|6|10|11|13|14|16-17}
 // src tests/Behat/Context/Setup/BookContext.php
 
 final class BookContext implements Context
@@ -31,9 +31,7 @@ final class BookContext implements Context
     ) {
     }
 
-    /**
-     * @Given there is (also) a book with name :name
-     */
+    #[Given('there is (also) a book with name :name']
     public function thereIsABookWithName(string $name): void
     {
         $book = new Book();
@@ -150,7 +148,7 @@ final class ManagingBooksContext implements Context
 
 ---
 
-```php {13-19|14|16|18}
+```php {13-19|13|14|16}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
@@ -163,9 +161,7 @@ final class ManagingBooksContext implements Context
         $this->indexPage->open();
     }
 
-    /**
-     * @Then there should be :amount books in the list
-     */
+    #[Then('there should be :amount books in the list')]
     public function thereShouldBeBooksInTheList(int $amount): void
     {
         Assert::eq($this->indexPage->countItems(), $amount);
@@ -198,16 +194,14 @@ Feature: Browsing books
 transition: fade
 ---
 
-```php {12-18}
+```php {7-11}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
     // [...]
 
-    /**
-     * @Then there should be :amount books in the list
-     */
+    #[Then('there should be :amount books in the list')]
     public function thereShouldBeBooksInTheList(int $amount): void
     {
         Assert::eq($this->indexPage->countItems(), $amount);
@@ -217,24 +211,20 @@ final class ManagingBooksContext implements Context
 
 ---
 
-```php {15-21|16|18|20}
+```php {13-17|13|14|16}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
     // [...]
 
-    /**
-     * @Then there should be :amount books in the list
-     */
+    #[Then('there should be :amount books in the list')]
     public function thereShouldBeBooksInTheList(int $amount): void
     {
         Assert::eq($this->indexPage->countItems(), $amount);
     }
 
-    /**
-     * @Then I should see the book :name in the list
-     */
+    #[Then('I should see the book :name in the list')]
     public function iShouldSeeTheBookInTheList(string $name): void
     {
         Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));

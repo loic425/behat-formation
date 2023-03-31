@@ -1,6 +1,6 @@
 # Editing books
 
-```gherkin {all|1,10|2-5|7-8|11|12|13}
+```gherkin {all|1,11|2-5|7-9|12|13}
 @managing_books
 Feature: Editing a book
     In order to change information about a book
@@ -94,7 +94,7 @@ final class ManagingBooksContext implements Context
 transition: fade
 ---
 
-```php {18-19}
+```php {16-17}
 // src tests/Behat/Context/Setup/BookContext.php
 
 final class BookContext implements Context
@@ -104,9 +104,7 @@ final class BookContext implements Context
     ) {
     }
 
-    /**
-     * @Given there is (also) a book with name :name
-     */
+    #[Given('there is (also) a book with name :name')
     public function thereIsABookWithName(string $name): void
     {
         $book = new Book();
@@ -120,7 +118,7 @@ final class BookContext implements Context
 
 ---
 
-```php {22|7}
+```php {20|7}
 // src tests/Behat/Context/Setup/BookContext.php
 
 final class BookContext implements Context
@@ -131,9 +129,7 @@ final class BookContext implements Context
     ) {
     }
 
-    /**
-     * @Given there is (also) a book with name :name
-     */
+    #[Given('there is (also) a book with name :name')
     public function thereIsABookWithName(string $name): void
     {
         $book = new Book();
@@ -350,40 +346,15 @@ Feature: Editing a book
 transition: fade
 ---
 
-```php {7-15|8}
+```php {7-13|7|8}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
     // [...]
     
-    /**
-     * @Then the book :name should appear in the list
-     */
-    public function theBookShouldAppearInTheList(string $name): void
-    {
-        $this->indexPage->open();
-
-        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));
-    }
-    
-    // [...]
-}
-```
-
----
-
-```php {9}
-// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
-
-final class ManagingBooksContext implements Context
-{
-    // [...]
-    
-    /**
-     * @Then the book :name should appear in the list
-     * @Then this book with name :name should appear in the list
-     */
+    #[Then('the book :name should appear in the list')
+    #[Then('this book with name :name should appear in the list')
     public function theBookShouldAppearInTheList(string $name): void
     {
         $this->indexPage->open();

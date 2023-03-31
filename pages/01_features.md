@@ -1,5 +1,7 @@
 # Features
 
+<v-clicks>
+
 Les features contiennent des scénarii qui décrivent les fonctionnalités de l'application.
 
 Exemple 1 : Browsing books
@@ -23,11 +25,11 @@ Feature: Browsing books
         And I should see the book "Shinning" in the list
 ```
 
+</v-clicks>
+
 ---
 
 # Features
-
-<v-clicks>
 
 Les features contiennent des scénarii qui décrivent les fonctionnalités de l'application.
 
@@ -51,5 +53,3 @@ Feature: Adding a new book
         Then I should be notified that it has been successfully created
         And the book "Shinning" should appear in the list
 ```
-
-</v-clicks>

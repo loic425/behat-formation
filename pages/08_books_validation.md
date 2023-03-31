@@ -62,8 +62,52 @@ Feature: Books validation
 ```
 
 ---
+transition: fade
+---
 
-```php {7|8|9|11}
+```php {7|8|9}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    // [...]
+
+    #[When('I specify its name as :name')]
+    #[When('I do not specify any name')]
+    public function iSpecifyItsNameAs(string $name): void
+    {
+        $this->createPage->nameIt($name);
+    }
+    
+    // [...]
+}
+```
+
+---
+transition: fade
+---
+
+```php {9|11}
+// tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
+
+final class ManagingBooksContext implements Context
+{
+    // [...]
+
+    #[When('I specify its name as :name')]
+    #[When('I do not specify any name')]
+    public function iSpecifyItsNameAs(?string $name = null): void
+    {
+        $this->createPage->nameIt($name);
+    }
+    
+    // [...]
+}
+```
+
+---
+
+```php {11}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
@@ -169,16 +213,14 @@ Feature: Books validation
 
 ---
 
-```php {all|8|10|12|13|14}
+```php {all|7|8|10|11|12}
 // tests/Behat/Context/Ui/Backend/ManagingBooksContext.php
 
 final class ManagingBooksContext implements Context
 {
     // [...]
 
-    /**
-     * @Then I should be notified that :element is required
-     */
+    #[Then('I should be notified that :element is required')] 
     public function iShouldBeNotifiedThatElementIsRequired(string $element): void
     {
         Assert::eq($this->createPage->getValidationMessage(

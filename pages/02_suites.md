@@ -9,7 +9,7 @@ Sur nos exemples précédents, nous avons le tag "@managing_books" ainsi que le 
 
 Nous pouvons ainsi créer une suite `ui_managing_books` qui est utilisée pour ces deux tags:
 
-```yaml
+```yaml {all|3|4|5|7-8|10|12-13|15}
 default:
     suites:
         ui_managing_books:

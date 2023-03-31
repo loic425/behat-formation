@@ -324,7 +324,7 @@ final class ManagingBooksContext implements Context
 
 ---
 
-```gherkin {14|15|16}
+```gherkin {14|15}
 @managing_books
 Feature: Adding a new book
     In order to create new book
@@ -342,6 +342,29 @@ Feature: Adding a new book
         Then I should be notified that it has been successfully created
         And the book "Shinning" should appear in the list
 
+```
+
+---
+
+```php {all|10|12|14}
+// tests/Behat/Context/Ui/Backend/NotificationContext.php
+
+final class NotificationContext implements Context
+{
+    public function __construct(private NotificationCheckerInterface $notificationChecker)
+    {
+    }
+
+    /**
+     * @Then I should be notified that it has been successfully created
+     */
+    public function iShouldBeNotifiedItHasBeenSuccessfullyCreated(): void
+    {
+        $this->notificationChecker->checkNotification('has been successfully created.', NotificationType::success());
+    }
+    
+    // [...]
+}
 ```
 
 ---
